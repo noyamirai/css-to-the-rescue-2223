@@ -67,8 +67,9 @@ html {
 body {
   position: relative;
 
-  /* display: flex; */
-  /* justify-content: center; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   font-family: var(--default-font);
   color: var(--text-color);
@@ -89,6 +90,7 @@ h1 {
 }
 
 h2 {
+    color: #999fb7;
     font-size: 1em;
 }
 
@@ -99,7 +101,7 @@ h1 + * {
     #MAIN
 =============================================*/
 main {
-    padding: 2em;
+    /* padding: 2em; */
 }
 
 /*=============================================
@@ -111,19 +113,15 @@ ul {
 	--avatar-size: 4em;
 	--overlap-size: 6em;
 	--hover-overlap-size: 16em;
-	--num-children: 4;
-	--num-children-1: calc(var(--num-children) - 1);
+	--num-children: 5;
 	
-    --grid-cell-size-to-use: var(--overlap-size);
-
 	display: grid;
 	gap: var(--gap);
-	margin: 0 auto;
-	
 	
 	grid-auto-flow: column;
-	grid-template-columns: repeat(auto-fit, 1fr);
-    width: calc(((4*var(--overlap-size)) + (.18em * 4)) + var(--gap));
+	grid-template-columns: repeat(var(--num-children), 1fr);
+    width: calc(((var(--num-children)*var(--overlap-size)) + (0.18em * 5)) + var(--gap));
+
 }
 
     li {
@@ -132,13 +130,16 @@ ul {
         width: var(--overlap-size);
 
         cursor: pointer;
-        padding: .8em;
         border: var(--border-settings);
 
+        height: 6em;
+        border-radius: 6em;
         overflow: hidden;
 
         transition: all ease-in-out 0.25s;
     }
+
+    li:first-of-type { --hover-overlap-size: 20em; }
 
     li:hover {
         width: var(--hover-overlap-size);
@@ -146,28 +147,30 @@ ul {
     }
 
         li > figure {
-            position: relative;
+            position: absolute;
+            inset: -0.18em;
+
             display: flex;
             align-items: center;
-            /* justify-content: center; */
 
-            gap: 1em;
-            transition: all 250ms ease-in-out;
+            width: var(--hover-overlap-size);
+
+            gap: var(--gap);
+        }
+
+        li:hover > figure figcaption {
+            opacity: 100%;
         }
 
             /* Content container */
             figcaption {
-                position: absolute;
-
-                top: 0;
-                left: calc(4em + .8em);
-
                 display: flex;
                 flex-direction: column;
                 align-items: flex-start;
-                gap: .5em;
+                gap: .3em;
 
-                /* opacity: 0; */
+                opacity: 0;
+                transition: all ease-in-out 0.25s;
             }
 
             /* Expertise label */
@@ -175,23 +178,32 @@ ul {
                 padding: .3em .8em;
 
                 font-size: .8em;
-                color: #118149;
+                color: #104b2e;
+                text-transform: uppercase;
+                font-weight: 700;
                 
                 border-radius: 1em;
                 background-color: var(--primary-color);
             }
 
+            li:first-of-type figcaption p {
+                color: #17414d;
+                background-color: var(--secondary-color);
+            }
+
     li picture {
         display: block;
-        width: 4em;
-        min-width: 4em;
-        height: 4em;
-        min-height: 4em;
 
-        background-color: var(--comment-color);
+        width: var(--overlap-size);
+        min-width: var(--overlap-size);
+
+        height: var(--overlap-size);
+        min-height: var(--overlap-size);
     }
 
         picture > img {
+            padding: 12px;
+
             width: 100%;
             height: 100%;
 
@@ -200,6 +212,4 @@ ul {
         }
 
     li picture,
-    picture > img {
-        border-radius: 50%;
-    }
+    picture > img { border-radius: 50%; }
