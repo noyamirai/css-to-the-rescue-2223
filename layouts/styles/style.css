@@ -110,7 +110,7 @@ ul {
     --gap: 0.35em;
 	--avatar-size: 4em;
 	--overlap-size: 6em;
-	--hover-overlap-size: 10em;
+	--hover-overlap-size: 16em;
 	--num-children: 4;
 	--num-children-1: calc(var(--num-children) - 1);
 	
@@ -122,13 +122,15 @@ ul {
 	
 	
 	grid-auto-flow: column;
-	grid-template-columns: repeat(auto-fit, 6em);
-	/* width: calc(var(--grid-cell-size-to-use) * var(--num-children-1) + var(--gap) * var(--num-children) + var(--avatar-size)); */
-	
-    transition: all ease-in-out 0.25s;
+	grid-template-columns: repeat(auto-fit, 1fr);
+    width: calc(((4*var(--overlap-size)) + (.18em * 4)) + var(--gap));
 }
 
     li {
+        position: relative;
+
+        width: var(--overlap-size);
+
         cursor: pointer;
         padding: .8em;
         border: var(--border-settings);
@@ -139,10 +141,8 @@ ul {
     }
 
     li:hover {
-        grid-column-start: span 2;
-        /* width: 200px; */
+        width: var(--hover-overlap-size);
         background-color: var(--comment-color);
-        --grid-cell-size-to-use: var(--hover-overlap-size, var(--avatar-size));
     }
 
         li > figure {
@@ -167,7 +167,7 @@ ul {
                 align-items: flex-start;
                 gap: .5em;
 
-                opacity: 0;
+                /* opacity: 0; */
             }
 
             /* Expertise label */
