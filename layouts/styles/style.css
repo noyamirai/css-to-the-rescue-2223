@@ -140,6 +140,8 @@ ul {
     }
 
     li:first-of-type { --hover-overlap-size: 20em; }
+    li:last-of-type { --hover-overlap-size: 21em; }
+    li:nth-of-type(3) { --hover-overlap-size: 18em; }
 
     li:hover {
         width: var(--hover-overlap-size);
