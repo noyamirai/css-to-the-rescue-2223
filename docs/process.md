@@ -13,7 +13,7 @@ I hope that my process documentation will provide valuable insights into my desi
 
 On february 15th, I started my day day by creating a moodboard of skeuomorphic buttons. As I browsed through the web, I ended up stumbling on this synth keyboard called [OP-1 Groovebox by Teenage Engineering](https://teenage.engineering/products/op-1):
 
-![OP-1 Groovebox](../docs/assets/op1-groovebox.webp)
+![OP-1 Groovebox](../docs/assets/op1_groovebox.webp)
 
 The OP-1 Groovebox inspired me to create my control panel in a keyboard type way, so that different types of form elements can always be added into the board. I kind of knew what I wanted, but at the same time I felt lost. This type of design and style of coding (no classes or javascript), is way out of my comfort zone! So, Instead of spending hours thinking of a design, I decided to get started with creating the HTML structure. I reminded myself to not go too crazy as I tend to do and start with a simple button, or in this case a `input[type="checkbox"]` to create an on/off switch.
 
