@@ -223,7 +223,7 @@ fieldset:has(input:not(:checked))::before {
     }
 
     fieldset:has(input:checked) > label {
-        animation: decreaseZindex 250ms forwards 250ms;
+      animation: decreaseZindex 250ms forwards 250ms;
     }
 
     /* Reset tabbing style */

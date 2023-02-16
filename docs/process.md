@@ -10,7 +10,7 @@ The reason I chose skeuomorphism is primarily because it allows me to shift my f
 I hope that my process documentation will provide valuable insights into my design choices and the techniques I used to create the modular control panel. Enjoy!
 
 ## Week 1: One button at a time
-
+### Day 1
 On february 15th, I started my day day by creating a moodboard of skeuomorphic buttons. As I browsed through the web, I ended up stumbling on this synth keyboard called [OP-1 Groovebox by Teenage Engineering](https://teenage.engineering/products/op-1):
 
 ![OP-1 Groovebox](../docs/assets/op1_groovebox.webp)
@@ -71,5 +71,15 @@ With the CSS I wrote at that time, if I moved one of the `fieldsets` outside of 
 ![Modular failure example](../docs/assets/modular-failure.png)
 
 This 'modular failure' as I call it, showed me I need to either rethink my HTML structure and decide whether or not I will be wrapping everything inside a form element instead of a section, or maybe change up the CSS selectors to hopefully create a more 'global' styling effect.
+
+### Day 2
+
+On february 16th I continued working on my button panel, primarily the structure of the HTML. Because I want to make sure my panel is modular, I ended up getting rid of the `section` wrapper. I figured having this wrapper did not add any meaning, becasue the `form` was already acting as a container.
+
+Additionally, I put the `input` inside of my `labels`, this makes sure the input is always clickable (On day 1 this was not the case)! Once I was happy with my HTML structure and had fixed the CSS selectors, I shifted my focus to creating a shadow effect whenever a button is pressed.
+
+For some reason I could not figure out how to approach the situation. I tried many different possible solutions but nothing was really working the way I wanted it to. I tried giving `fieldset + fieldset` a pseudo-element to cast a shadow on the relevant side, except this caused issues with checking when this shadow needed to be shown. After many hours I refactored the shadow element and gave every button it's very own shadow, which logically makes more sense than my other approach. All there was left to do was hide the shadow of the checked checkbox and change the z-index so the checkbox quite literally gets pushed down,
+
+![Button shadows](../docs/assets/button-shadows.png)
 
 Even though I only created one little custom checkbox in one really long day, I felt it was a very valuable learning experience for me. I am excited to continue refining my design and applying what I've learned so far to the other form elements.
