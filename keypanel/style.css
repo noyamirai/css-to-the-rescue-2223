@@ -77,73 +77,115 @@ main {
 /* =============================================================================
   #PANEL
 ============================================================================= */
-section {
+/* Panel container */
+form {
   position: relative;
-  display: inline-flex;
+  display: flex;
+  gap: 6px;
+
+  padding: 6px;
+  border-radius: 14px;
+  overflow: hidden;
+
+  background-color: #353535;
+
   box-shadow: 0px 0px 5px 0px rgb(0 0 0 / 25%) inset, 
               3px 3px 6px 0px rgb(195, 195, 195);
 
-  border-radius: 12px;
-  background-color: #353535;
-  /* background-color: #d0d0d0; */
+  z-index: 50;
 }
-
-  form {
-    display: flex;
-    gap: 6px;
-
-    padding: 6px;
-    border-radius: 14px;
-    overflow: hidden;
-
-    background-color: #353535;
-  }
 
   fieldset {
     position: relative;
-    /* overflow: hidden; */
-
     width: 80px;
     height: 80px;
+  }
+
+  /* Button wrapper */
+  fieldset > label,
+  section > label {
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 100%;
 
     padding: 10px;
 
     background-color: #616161;
     border-radius: 10px;
 
-    box-shadow: 0px 0px 5px 1px rgb(73 73 73 / 79%) inset, 5px 5px 2px 2px rgb(29 29 29);
+    box-shadow: 0px 0px 5px 1px rgb(73 73 73 / 79%) inset, 
+                0 2px 2px 2px rgb(29 29 29);
     border: 3px solid transparent;
     transform: scale(1);
 
     cursor: pointer;
     transition: all 250ms ease-in-out;
+    z-index: 300;
   }
-  fieldset > * {
+
+  /* All children of button wrapper */
+  fieldset > *,
+  section > * {
     cursor: pointer;
   }
 
+  fieldset::before {
+    content: '';
+    position: absolute;
 
-  fieldset:has(+ fieldset):has(input:checked) {
-    box-shadow: 0px 0px 5px 1px rgb(73 73 73 / 79%) inset, 0px 0px 6px 2px rgb(29 29 29), -5px 0px 3px 0px #545454 inset;
+    pointer-events: none;
+
+    top: -3px;
+    bottom: -3px;
+
+    left: -20px;
+    right: -20px;
+
+    height: auto;
+
+    transform: scale(1);
+
+    /* background-color: red; */
+    background: linear-gradient(90deg, 
+                transparent 0%, rgb(47 47 47 / 60%) 20%,
+                rgb(47 47 47 / 60%) 80%, 
+                transparent 100%);
+
+    /* opacity: 0; */
+    transition: all 250ms ease-in-out;
+    z-index: 200;
   }
 
-    fieldset:has(input:checked) {
+
+  fieldset:has(input:checked)::before {
+    opacity: 0%!important;
+  }
+
+    /* Button clicked */
+    fieldset:has(input:checked) > label,
+    section:has(input:checked) > label {
       transform: scale(0.96);
-      box-shadow: 0px 0px 5px 1px rgb(73 73 73 / 79%) inset, 0px 0px 6px 2px rgb(29 29 29);
+      box-shadow: 0px 0px 5px 1px rgb(73 73 73 / 79%) inset, 
+                  0px 0px 6px 2px rgb(29 29 29);
+
+      z-index: 100;
     }
 
-    fieldset:has(input:checked )
-
-    fieldset:has(input:focus) {
+    /* Reset tabbing style */
+    fieldset:has(input:focus) > label,
+    section:has(input:focus) > label {
       border: 3px solid transparent;
     }
 
-    /* only when tabbing */
-    fieldset:has(input:focus-visible) {
+    /* Tabbing style */
+    fieldset:has(input:focus-visible) > label,
+    section:has(input:focus-visible) > label {
       border: 3px solid #949494;
     }
 
-    form input {
+    /* Hiding the actual input visually */
+    input {
       opacity: 0;
       position: absolute;
 
@@ -151,7 +193,9 @@ section {
       margin: 0;
     }
 
-    label {
+    /* Clickable label: holds the circle */
+    /* Specific styling for checkbox */
+    input[type="checkbox"] + div {
       width: 100%;
       height: 100%;
 
@@ -167,7 +211,7 @@ section {
       box-shadow: 3px 4px 8px 0px rgba(58, 58, 58, 0.729);
     }
 
-    label > div {
+    input[type="checkbox"] + div > div {
       width: 100%;
       height: 100%;
 
@@ -179,15 +223,7 @@ section {
       background: linear-gradient(45deg, rgb(170 170 170 / 94%), rgb(63 63 63) 80%);
     }
 
-    
-    input:checked + label span {
-      border: 1px solid transparent;
-      background-color: #01ff56;
-      box-shadow: 0px 0px 5px 1px #01ff56,
-      0px 1px 2px 1px transparent inset;
-    }
-
-    label span {
+    input[type="checkbox"] + div > div span {
       display: block;
 
       width: 100%;
@@ -198,8 +234,14 @@ section {
       border: 1px solid #686868;
       background-color: #565656;
       box-shadow: 0px 0px 5px 1px transparent,
-      0px 1px 2px 1px #474747 inset;
+                  0px 1px 2px 1px #474747 inset;
 
       transition: all 250ms ease-in-out;
-      /* transition: background-color, box-shadow 150ms ease-in-out; */
+    }
+
+    input[type="checkbox"]:checked + div > div span {
+      border: 1px solid transparent;
+      background-color: #01ff56;
+      box-shadow: 0px 0px 5px 1px #01ff56,
+                  0px 1px 2px 1px transparent inset;
     }
