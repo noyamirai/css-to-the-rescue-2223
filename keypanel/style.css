@@ -115,7 +115,7 @@ form {
     border-radius: 10px;
 
     box-shadow: 0px 0px 5px 1px rgb(73 73 73 / 79%) inset, 
-                0 2px 2px 2px rgb(29 29 29);
+                3px 3px 2px 2px rgb(29 29 29);
     border: 3px solid transparent;
     transform: scale(1);
 
@@ -129,6 +129,12 @@ form {
   section > * {
     cursor: pointer;
   }
+
+  /* fieldset::before,
+  fieldset::after {
+    content: "";
+    position: absolute;
+  } */
 
   fieldset::before {
     content: '';
@@ -152,24 +158,72 @@ form {
                 rgb(47 47 47 / 60%) 80%, 
                 transparent 100%);
 
-    /* opacity: 0; */
-    transition: all 250ms ease-in-out;
+    opacity: 100%;
+    /* transition: all 250ms ease-in-out; */
     z-index: 200;
   }
 
-
-  fieldset:has(input:checked)::before {
-    opacity: 0%!important;
+  /* Define the keyframe animation */
+@keyframes hideShadow {
+  from { 
+    opacity: 100%; 
   }
+  to { 
+    opacity: 0%;
+  }
+}
+
+@keyframes revealShadow {
+  from { 
+    opacity: 0%;
+  }
+  to { 
+    opacity: 100%; 
+  }
+}
+
+@keyframes decreaseZindex {
+  from { 
+    z-index: 200;
+  }
+  to { 
+    z-index: 100;
+  }
+}
+
+@keyframes increaseZindex {
+  from { 
+    z-index: 200;
+  }
+  to { 
+    z-index: 100;
+  }
+}
+
+/* Apply the keyframe animation when the checkbox is checked */
+fieldset:has(input:checked)::before {
+  animation: hideShadow 250ms forwards;
+  opacity: 0;
+}
+
+/* Pause or reset the animation when the checkbox is unchecked */
+fieldset:has(input:not(:checked))::before {
+  animation: revealShadow 250ms forwards;
+  opacity: 100%;
+}
+
 
     /* Button clicked */
     fieldset:has(input:checked) > label,
     section:has(input:checked) > label {
-      transform: scale(0.96);
+      transform: scale(0.97);
       box-shadow: 0px 0px 5px 1px rgb(73 73 73 / 79%) inset, 
                   0px 0px 6px 2px rgb(29 29 29);
+      /* z-index: 100; */
+    }
 
-      z-index: 100;
+    fieldset:has(input:checked) > label {
+        animation: decreaseZindex 250ms forwards 250ms;
     }
 
     /* Reset tabbing style */
@@ -196,6 +250,7 @@ form {
     /* Clickable label: holds the circle */
     /* Specific styling for checkbox */
     input[type="checkbox"] + div {
+      position: relative;
       width: 100%;
       height: 100%;
 
@@ -209,6 +264,7 @@ form {
       outline: 1px solid #616161;
 
       box-shadow: 3px 4px 8px 0px rgba(58, 58, 58, 0.729);
+      z-index: 400;
     }
 
     input[type="checkbox"] + div > div {
