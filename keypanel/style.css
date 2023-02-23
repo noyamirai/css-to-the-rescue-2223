@@ -95,15 +95,15 @@ form {
   z-index: 50;
 }
 
-  fieldset {
+  /* Has 'keywrap' somewhere in data attr */
+  [data-type*="keywrap"] {
     position: relative;
     width: 80px;
     height: 80px;
   }
 
   /* Button wrapper */
-  fieldset > *:first-of-type,
-  section > *:first-of-type {
+  [data-type*="keywrap"] > *:first-of-type {
     display: flex;
     position: relative;
     width: 100%;
@@ -124,97 +124,52 @@ form {
     z-index: 300;
   }
 
-  fieldset[data-type="knob"] > button {
+  [data-type="keywrap knob"] > *:first-of-type {
     padding: 6px;
-    /* border: none; */
   }
 
-  form:valid > fieldset:last-of-type {
-    animation: widthAnimation 600ms forwards;
-  }
-
-  form:not(valid) > fieldset:last-of-type {
-    animation: widthUndoAnimation 600ms forwards;
-    opacity: 100%;
+  form:valid > [data-type="keywrap knob"] {
+    position: relative;
     width: 80px;
+    opacity: 100%;
+
+    animation: widthAnimation 400ms forwards;
   }
 
-  fieldset:last-of-type {
+  [data-type="keywrap knob"] {
     position: absolute;
     opacity: 0;
 
     width: 0;
+  }
+
+
+  form:valid > [data-type="keywrap knob"] > label {
     transform: scale(.1);
-    transition: all 250ms ease-in-out;
+    animation: scaleAnimation 450ms forwards;
   }
 
-  @keyframes widthAnimation {
-    0% {
-      transform: scale(.1);
-    }
+  /* form:has(input[name="power_btn"]:not(:checked)) > [data-type="keywrap knob"] {
+    position: relative;
+    opacity: 100%;
+    width: 80px;
 
-    20% {
-      transform: scale(.12);
-    }
-
-    75% {
-      position: relative;
-      opacity: 100%;
-      width: 80px;
-      transform: scale(1.05);
-    }
-
-    100%{
-      position: relative;
-      opacity: 100%;
-      width: 80px;
-      transform: scale(1);
-    }
-  }
-
-  @keyframes widthUndoAnimation {
-    0% {
-      position: relative;
-      opacity: 100%;
-      width: 80px;
-      transform: scale(1);
-    }
-
-    20% {
-      position: relative;
-      opacity: 100%;
-      width: 80px;
-      transform: scale(1.05);
-    }
-
-    75% {
-      opacity: 0;
-      transform: scale(.12);
-    }
-
-    100%{
-      /* opacity: 0; */
-      width: 0;
-      /* position: absolute; */
-      transform: scale(.1);
-    }
-  }
-
-  /* fieldset > *:first-of-type:is(button):active > div {
-    animation: btnRotation 250ms forwards;
-  }
-
-  @keyframes btnRotation {
-    0% {
-      transform: rotate(0deg);
-    }
-    
-    100% {
-      transform: rotate(90deg);
-    }
+    animation: widthUndoAnimation 500ms forwards 250ms;
   } */
 
-    fieldset > *:first-of-type:is(button) > div {
+  
+
+  /* form:not(:valid) > [data-type="keywrap knob"] > label {
+    animation: scaleUndoAnimation 450ms forwards;
+    transform: scale(1);
+  } */
+
+  
+  [data-type="keywrap knob"] > label {
+    transform: scale(.1);
+  }
+
+    [data-type*="knob"] > *:first-of-type > div {
       position: relative;
       display: flex;
       background-color: #808080;
@@ -232,7 +187,7 @@ form {
       transition: transform 250ms ease-in-out;
     }
 
-    fieldset > *:first-of-type:is(button) > span {
+    [data-type*="knob"] > *:first-of-type > span {
       position: absolute;
       
       display: block;
@@ -248,7 +203,7 @@ form {
       background-color: #414141;
     }
 
-      fieldset > *:first-of-type:is(button) > span::before {
+      [data-type*="knob"] > *:first-of-type > span::before {
         content: "";
         position: absolute;
 
@@ -263,11 +218,12 @@ form {
         height: 100%;
       }
 
-      fieldset > *:first-of-type:is(button) > span:last-of-type {
+      [data-type*="knob"] > *:first-of-type > span:last-of-type {
         transform: translateX(-50%) rotate(45deg);
       }
 
-      fieldset > *:first-of-type:is(button) > div span {
+
+      [data-type*="knob"] > *:first-of-type > div > span {
         width: 100%;
         height: 100%;
 
@@ -281,31 +237,75 @@ form {
         /* border: 1px solid #555555; */
       }
 
-        fieldset > *:first-of-type:is(button) > div span::before {
-          content: "";
-          position: absolute;
+      [data-type*="knob"] > *:first-of-type > div > span > span {
+        display: flex;
+        width: 100%;
+        height: 100%;
 
-          top: 12px;
-          left: 50%;
+        padding-top: 4px;
+
+        justify-content: center;
+        transition: all 250ms ease-in-out;
+      }
+
+        [data-type*="knob"] > *:first-of-type > div > span > span::before {
+          display: block;
+          content: "";
+          position: relative;
 
           width: 14px;
           height: 14px;
 
           border-radius: 50%;
 
-          transform: translateX(-50%);
           background-color: #848484;
           box-shadow: 1px 1px 2px 0px rgb(0 0 0 / 43%) inset;
           border: 1px solid #757575;
         }
 
+        [data-type*="knob"] input:checked ~ div > span > span {
+          transform: rotate(0deg);
+          animation: btnRotation 1.5s forwards;
+        }
+
+        [data-type*="knob"] input:not(:checked) ~ div > span > span {
+          transform: rotate(130deg);
+          animation: btnRotationReverse 1.5s forwards reverse;
+        }
+
+        @keyframes btnRotation {
+          0% { transform: rotate(0deg); }
+          20% { transform: rotate(40deg); }
+          25% { transform: rotate(42deg); }
+          30% { transform: rotate(40deg); }
+          50% { transform: rotate(90deg); }
+          55% { transform: rotate(92deg); }
+          60% { transform: rotate(90deg); }
+          80% { transform: rotate(130deg); }
+          85% { transform: rotate(132deg); }
+          100% { transform: rotate(130deg); }
+        }
+
+        @keyframes btnRotationReverse {
+          0% { transform: rotate(0deg); }
+          20% { transform: rotate(40deg); }
+          25% { transform: rotate(42deg); }
+          30% { transform: rotate(40deg); }
+          50% { transform: rotate(90deg); }
+          55% { transform: rotate(92deg); }
+          60% { transform: rotate(90deg); }
+          80% { transform: rotate(130deg); }
+          85% { transform: rotate(132deg); }
+          100% { transform: rotate(130deg); }
+        }
+
+
   /* All children of button wrapper */
-  fieldset > *,
-  section > * {
+  [data-type*="keywrap"] > * {
     cursor: pointer;
   }
 
-  fieldset::before {
+  [data-type*="keywrap"]::before {
     content: '';
     position: absolute;
 
@@ -331,38 +331,35 @@ form {
   }
 
 /* Apply the keyframe animation when the checkbox is checked */
-fieldset:has(input:checked)::before {
+[data-type*="checkbox"]:has(input:checked)::before {
   animation: hideShadow 250ms forwards;
   opacity: 0;
 }
 
 /* Pause or reset the animation when the checkbox is unchecked */
-fieldset:has(input:not(:checked))::before {
+[data-type*="checkbox"]:has(input:not(:checked))::before {
   animation: revealShadow 250ms forwards;
   opacity: 100%;
 }
 
     /* Button clicked */
-    fieldset:has(input:checked) > label,
-    section:has(input:checked) > label {
+    [data-type*="checkbox"]:has(input:checked) > label {
       transform: scale(0.97);
       box-shadow: 0px 0px 5px 1px rgb(73 73 73 / 79%) inset, 
                   0px 0px 6px 2px rgb(29 29 29);
     }
 
-    fieldset:has(input:checked) > label {
+    [data-type*="checkbox"]:has(input:checked) > label {
       animation: decreaseZindex 250ms forwards 250ms;
     }
 
     /* Reset tabbing style */
-    fieldset:has(input:focus) > label,
-    section:has(input:focus) > label {
+    [data-type*="keywrap"]:has(input:focus) > label {
       border: 3px solid transparent;
     }
 
     /* Tabbing style */
-    fieldset:has(input:focus-visible) > label,
-    section:has(input:focus-visible) > label {
+    [data-type*="keywrap"]:has(input:focus-visible) > label {
       border: 3px solid #949494;
     }
 
@@ -377,7 +374,7 @@ fieldset:has(input:not(:checked))::before {
 
     /* Clickable label: holds the circle */
     /* Specific styling for checkbox */
-    input[type="checkbox"] + div {
+    [data-type="keywrap checkbox"] input[type="checkbox"] + div {
       position: relative;
       width: 100%;
       height: 100%;
@@ -395,7 +392,7 @@ fieldset:has(input:not(:checked))::before {
       z-index: 400;
     }
 
-    input[type="checkbox"] + div > div {
+    [data-type="keywrap checkbox"] input[type="checkbox"] + div > div {
       width: 100%;
       height: 100%;
 
@@ -407,7 +404,7 @@ fieldset:has(input:not(:checked))::before {
       background: linear-gradient(45deg, rgb(170 170 170 / 94%), rgb(63 63 63) 80%);
     }
 
-    input[type="checkbox"] + div > div span {
+    [data-type="keywrap checkbox"] input[type="checkbox"] + div > div span {
       display: block;
 
       width: 100%;
@@ -423,14 +420,12 @@ fieldset:has(input:not(:checked))::before {
       transition: all 250ms ease-in-out;
     }
 
-    input[type="checkbox"]:checked + div > div span {
+    [data-type="keywrap checkbox"] input[type="checkbox"]:checked + div > div span {
       border: 1px solid transparent;
       background-color: #01ff56;
       box-shadow: 0px 0px 5px 1px #01ff56,
                   0px 1px 2px 1px transparent inset;
     }
-
-
 
   /* Define the keyframe animation */
 @keyframes hideShadow {
@@ -468,3 +463,78 @@ fieldset:has(input:not(:checked))::before {
     z-index: 100;
   }
 }
+
+@keyframes widthAnimation {
+    0% {
+      position: absolute;
+      width: 0px;
+    }
+
+    75% {
+      position: relative;
+      z-index: 300;
+    }
+
+    100%{
+      position: relative;
+      opacity: 100%;
+      width: 80px;
+      z-index: 300;
+    }
+  }
+
+  @keyframes widthUndoAnimation {
+    0% {
+      position: relative;
+      opacity: 100%;
+      width: 80px;
+    }
+
+    75% {
+      position: absolute;
+      opacity: 0;
+      width: 0px;
+    }
+
+    100%{
+      position: absolute;
+      opacity: 0;
+      width: 0;
+    }
+  }
+
+  @keyframes scaleAnimation {
+    0% {
+      transform: scale(.1);
+    }
+
+    20% {
+      transform: scale(.12);
+    }
+
+    75% {
+      transform: scale(1.05);
+    }
+
+    100%{
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes scaleUndoAnimation {
+    0% {
+      transform: scale(1);
+    }
+
+    20% {
+      transform: scale(1.05);
+    }
+
+    75% {
+      transform: scale(.12);
+    }
+
+    100%{
+      transform: scale(.1);
+    }
+  }

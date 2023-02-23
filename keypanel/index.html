@@ -14,10 +14,9 @@
 
         <!-- https://medium.com/@wicar/skeuomorphism-in-interface-designs-1ac4574c22e1 -->
 
-
         <form action="">
             
-            <fieldset>
+            <fieldset data-type="keywrap checkbox">
                 <label>
                     <input type="checkbox" name="power_btn" required>
                     <div>
@@ -27,15 +26,18 @@
                     </div>
                 </label>
             </fieldset>
-            
-            <fieldset data-type="knob">
-                <button type="button">
+            <fieldset data-type="keywrap knob">
+                <label>
+                    <input type="checkbox" name="resize_btn">
+
                     <span></span>
                     <span></span>
                     <div>
-                        <span></span>
+                        <span>
+                            <span></span>
+                        </span>
                     </div>
-                </button>
+                </label>
             </fieldset>
 
         </form>
