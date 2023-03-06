@@ -14,7 +14,7 @@
 
         <!-- https://medium.com/@wicar/skeuomorphism-in-interface-designs-1ac4574c22e1 -->
 
-        <form action="">
+        <form data-form="keypanel">
             
             <fieldset data-type="keywrap checkbox">
                 <label>
@@ -26,6 +26,7 @@
                     </div>
                 </label>
             </fieldset>
+            
             <fieldset data-type="keywrap knob">
                 <label>
                     <input type="checkbox" name="resize_btn">
@@ -40,6 +41,60 @@
                 </label>
             </fieldset>
 
+        </form>
+
+        <form data-form="container">
+            <section data-type="display">
+                <div>
+                    <span></span>
+                    <img src="./assets/bongo-cat.gif" alt="">
+                </div>
+            </section>
+
+            <section data-form="switch">
+                <fieldset data-type="switch">
+                    <label>
+                        <input type="checkbox" name="activate_btn">
+
+                        <div data-type="switch">
+                            <div>
+                                <div></div>
+                            </div>
+                            <div>
+                                <div></div>
+                            </div>
+                        </div>
+                    </label>
+                </fieldset>
+                
+                <fieldset data-type="switch">
+                    <label>
+                        <input type="checkbox" name="color_btn">
+
+                        <div data-type="switch">
+                            <div>
+                                <div></div>
+                            </div>
+                            <div>
+                                <div></div>
+                            </div>
+                        </div>
+                    </label>
+                </fieldset>
+            </section>
+
+            <!-- <section data-form="keypanel">
+                <fieldset data-type="keywrap flip">
+                    <label>
+                        <input type="checkbox" name="activate_btn" required>
+                        <div>
+                            <div>
+                                <span></span>
+                            </div>
+                        </div>
+                    </label>
+                </fieldset>
+            </section> -->
         </form>
         
     </main>

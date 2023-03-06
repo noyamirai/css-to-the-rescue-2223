@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>    
+ /* Boilerplate. The interesting stuff is after this section. */
+body {
+  margin: 3rem 2rem;
+  color: #eee;
+  background-color: #25274d;
+  font-family: system-ui;
+}
+
+.title,
+.sub-title {
+  text-align: center;
+}
+
+.demo {
+  display: flex;
+  justify-content: center;
+  border: 0.25rem solid #2e9cca;
+  padding: 2rem 0;
+  height: 60px;
+  background-color: #25274d;
+  box-shadow: 0 0 0.5rem rgba(black, 0.25);
+}
+
+.description {
+  margin: 0 auto;
+  max-width: 55ch;
+}
+
+/* // The Demo */
+
+/* // 3a */
+.state--off:checked {
+  display: initial;
+}
+
+/* // 3b */
+.state--off {
+  display: none;
+}
+
+/* // 4a */
+.state--toggle {
+  display: none;
+}
+
+/* // 4b. This should come after 4a so it has higher precedence */
+.state--off:not(:checked) ~ .state--toggle {
+  display: initial;
+}
+
+/* // 5a */
+.state--toggle:checked ~ .bar {
+  animation: 1s linear forwards move2;
+}
+
+/* // 5b */
+.state--off:checked ~ .bar {
+  background-color: firebrick;
+  animation: "";
+}
+
+/* // 5c */
+.bar {
+  width: 60px;
+  height: 8px;
+  background-color: #eee;
+  animation: 1s linear reverse move;
+}
+
+@keyframes move {
+  100% {
+    transform: translateX(100px);
+  }
+}
+
+@keyframes move2 {
+  100% {
+    transform: translateX(100px);
+  }
+}
+
+  </style>
+</head>
+
+<body>
+  
+
+  <h1 class="title">No Animation on Page Load</h1>
+    <section class="demo">
+      <input id="state--off" class="state state--off" type="checkbox" checked>
+      <input id="state--toggle" class="state state--toggle" type="checkbox" checked>
+      <div class="bar"></div>
+    </section>
+
+    <section class="description">
+      <ol>
+        <li>Create a disable checkbox before the actual toggle checkbox.</li>
+        <li>In the HTML, set both checkboxes to checked.</li>
+        <li>Style the disable checkbox so it is:<ol type="a">
+            <li>visible when checked.</li>
+            <li>invisible when unchecked.</li>
+          </ol>
+        </li>
+        <li>Style the toggle checkbox so it is: <ol type="a">
+            <li>invisible by default.</li>
+            <li>visible when the disable checkbox is not checked (i.e., use the <code>:not(:checked)</code> pseudo-class on the disable checkbox.</li>
+          </ol>
+        </li>
+        <li>Style the animated element so that it: <ol type="a">
+            <li>animates in the normal direction when the toggle checkbox is checked</li>
+            <li>has no animation when the disable checkbox is checked (i.e., set <code>animation: ""</code>).</li>
+            <li>animates in the reverse direction by default.</li>
+          </ol>
+        </li>
+      </ol>
+      
+      <p>The element will not animate on page load (2 and 5b). The disable checkbox will be visible (2 and 3a) and the toggle checkbox will be invisible (4a). When the user clicks the disable checkbox, it will become unchecked, causing it to become invisible (2b), the toggle checkbox to become visible (4b), and the element to animate out (5a). Now checking and unchecking the toggle checkbox will animate the element out and in (5a and 5c).</p>
+      <p>One caveat is that a checkbox appears checked on page load, even though the element is in the unchecked positon. This is because we are seeing the checked disable checkbox. However, when a checkbox is used to toggle an animation, the checkbox is usually hidden and its label is shown instead. We could always hide the checkboxes, give them labels, and set the visibility of their labels as we did for the checkboxes themselves before. Then we can have the checked appearance of the disable checkbox label match the unchecked appearance of the toggle checkbox label, so we will have an "unchecked" label on page load. Perhaps I will demonstrate this in a forked pen, but it's been a long day of coding, and I am tired now.</p>
+    </section>
+
+</body>
+</html>

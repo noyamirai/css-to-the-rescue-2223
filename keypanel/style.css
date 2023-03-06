@@ -72,29 +72,54 @@ h1, h2, h3, h4, h5, h6 {
 ============================================================================= */
 main {
   padding: 30px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* =============================================================================
-  #PANEL
+  #FORM
 ============================================================================= */
-/* Panel container */
-form {
+form, [data-form*="keypanel"] {
   position: relative;
   display: flex;
   gap: 6px;
 
   padding: 6px;
   border-radius: 14px;
-  overflow: hidden;
 
-  background-color: #353535;
-
-  box-shadow: 0px 0px 5px 0px rgb(0 0 0 / 25%) inset, 
-              3px 3px 6px 0px rgb(195, 195, 195);
+  width: min-content;
 
   z-index: 50;
 }
 
+  [data-form*="keypanel"] {
+    overflow: hidden;
+
+    background-color: #353535;
+    box-shadow: 0px 0px 5px 0px rgb(0 0 0 / 25%) inset, 
+                3px 3px 6px 0px rgb(195, 195, 195);
+  }
+
+  [data-form="container"] {
+    flex-direction: column;
+    align-items: center;
+
+    gap: 16px;
+  }
+
+form + form, [data-form*="keypanel"] + [data-form*="keypanel"] {
+  margin-top: 16px;
+}
+
+form > * {
+  border-radius: 10px;
+}
+
+/* =============================================================================
+  #FORM KEYS
+============================================================================= */
   /* Has 'keywrap' somewhere in data attr */
   [data-type*="keywrap"] {
     position: relative;
@@ -124,16 +149,50 @@ form {
     z-index: 300;
   }
 
-  [data-type="keywrap knob"] > *:first-of-type {
-    padding: 6px;
+  /* #KEYWRAP STYLING */
+  /* All children of button wrapper */
+  [data-type*="keywrap"] > * {
+    cursor: pointer;
   }
 
-  form:valid > [data-type="keywrap knob"] {
-    position: relative;
-    width: 80px;
-    opacity: 100%;
+  [data-type*="keywrap"]::before {
+    content: '';
+    position: absolute;
 
-    animation: widthAnimation 400ms forwards;
+    pointer-events: none;
+
+    top: -3px;
+    bottom: -3px;
+
+    left: -20px;
+    right: -20px;
+
+    height: auto;
+
+    transform: scale(1);
+
+    background: linear-gradient(90deg, 
+                transparent 0%, rgb(47 47 47 / 60%) 20%,
+                rgb(47 47 47 / 60%) 80%, 
+                transparent 100%);
+
+    opacity: 100%;
+    z-index: 200;
+  }
+
+  /* Reset tabbing style */
+  [data-type*="keywrap"]:has(input:focus) > label {
+    border: 3px solid transparent;
+  }
+
+  /* Tabbing style */
+  [data-type*="keywrap"]:has(input:focus-visible) > label {
+    border: 3px solid #949494;
+  }
+
+  /* #KNOB STYLING */
+  [data-type="keywrap knob"] > *:first-of-type {
+    padding: 6px;
   }
 
   [data-type="keywrap knob"] {
@@ -143,27 +202,32 @@ form {
     width: 0;
   }
 
+  /* CHECK USER-VALID */
+  form:valid > [data-type="keywrap knob"] {
+    position: relative;
+    width: 80px;
+    opacity: 100%;
+
+    animation: widthAnimation 400ms forwards;
+  }
 
   form:valid > [data-type="keywrap knob"] > label {
     transform: scale(.1);
     animation: scaleAnimation 450ms forwards;
   }
 
-  /* form:has(input[name="power_btn"]:not(:checked)) > [data-type="keywrap knob"] {
+  form:not(:valid) > [data-type="keywrap knob"] {
     position: relative;
     opacity: 100%;
     width: 80px;
 
     animation: widthUndoAnimation 500ms forwards 250ms;
-  } */
+  }
 
-  
-
-  /* form:not(:valid) > [data-type="keywrap knob"] > label {
+  form:not(:valid) > [data-type="keywrap knob"] > label {
     animation: scaleUndoAnimation 450ms forwards;
     transform: scale(1);
-  } */
-
+  }
   
   [data-type="keywrap knob"] > label {
     transform: scale(.1);
@@ -300,36 +364,7 @@ form {
         }
 
 
-  /* All children of button wrapper */
-  [data-type*="keywrap"] > * {
-    cursor: pointer;
-  }
-
-  [data-type*="keywrap"]::before {
-    content: '';
-    position: absolute;
-
-    pointer-events: none;
-
-    top: -3px;
-    bottom: -3px;
-
-    left: -20px;
-    right: -20px;
-
-    height: auto;
-
-    transform: scale(1);
-
-    background: linear-gradient(90deg, 
-                transparent 0%, rgb(47 47 47 / 60%) 20%,
-                rgb(47 47 47 / 60%) 80%, 
-                transparent 100%);
-
-    opacity: 100%;
-    z-index: 200;
-  }
-
+  /* #CHECKBOX STYLING */
 /* Apply the keyframe animation when the checkbox is checked */
 [data-type*="checkbox"]:has(input:checked)::before {
   animation: hideShadow 250ms forwards;
@@ -351,16 +386,6 @@ form {
 
     [data-type*="checkbox"]:has(input:checked) > label {
       animation: decreaseZindex 250ms forwards 250ms;
-    }
-
-    /* Reset tabbing style */
-    [data-type*="keywrap"]:has(input:focus) > label {
-      border: 3px solid transparent;
-    }
-
-    /* Tabbing style */
-    [data-type*="keywrap"]:has(input:focus-visible) > label {
-      border: 3px solid #949494;
     }
 
     /* Hiding the actual input visually */
@@ -427,7 +452,222 @@ form {
                   0px 1px 2px 1px transparent inset;
     }
 
-  /* Define the keyframe animation */
+/* =============================================================================
+  #DISPLAY
+============================================================================= */
+[data-type="display"] {
+  display: flex;
+
+  /* width: 172px; */
+  width: 73px;
+  height: 73px;
+
+  padding: 0px;
+
+  background: #e5e5e5;
+  box-shadow: inset 8px 8px 15px rgb(179 179 179 / 65%), 
+              inset -8px -8px 15px rgb(255 255 255 / 80%);
+  
+  transition: all 450ms ease-in-out;
+}
+
+  [data-type="display"] > div {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    /* background-color: #353535; */
+    border-radius: 7px;
+  }
+    [data-type="display"] img {
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    [data-type="display"] span {
+      content: "";
+      position: absolute;
+
+      inset: 0;
+      padding: 8px;
+
+      
+      width: 100%;
+      height: 100%;
+      
+      background-color: #e5e5e5;
+      /* background-color: blue; */
+      /* mix-blend-mode: lighten; */
+    }
+
+  form[data-form*="keypanel"]:valid + form[data-form="container"] > [data-type="display"] {
+    padding: 8px;
+  }
+
+  form[data-form*="keypanel"]:has([data-type*="knob"] input:checked) + form[data-form="container"] > [data-type="display"] {
+    animation: displayWidthAnimation 1.5s forwards;
+  }
+
+  form[data-form*="keypanel"]:has([data-type*="knob"] input:not(:checked)) + form[data-form="container"] > [data-type="display"] {
+    animation: displayUndoWidthAnimation 1.5s forwards reverse;
+  }
+
+    @keyframes displayWidthAnimation {
+      0% {    width: 73px; }
+      25% {   width: 95px; }
+      50% {   width: 130px; }
+      100% {  width: 172px; }
+    }
+    @keyframes displayUndoWidthAnimation {
+      0% {    width: 73px; }
+      25% {   width: 95px; }
+      50% {   width: 130px; }
+      100% {  width: 172px; }
+    }
+  
+  [data-form="container"] > [data-form*="keypanel"] {
+    opacity: 0;
+    transform: scale(.1);
+  }
+
+form[data-form*="keypanel"]:has([data-type="keywrap checkbox"] input:checked):has([data-type*="knob"] input:checked) + form[data-form="container"] > [data-form*="keypanel"] {
+  animation: widthAnimation2 400ms forwards 1.5s;
+}
+
+form[data-form*="keypanel"]:has([data-type*="knob"] input:not(:checked)) + form[data-form="container"] > [data-form*="keypanel"],
+form[data-form*="keypanel"]:has([data-type="keywrap checkbox"] input:not(:checked)) + form[data-form="container"] > [data-form*="keypanel"] {
+  animation: widthAnimation2Undo 400ms forwards reverse 1.5s;
+}
+
+@keyframes widthAnimation2 {
+  0% {
+    width: 0px;
+  }
+
+  100%{
+    opacity: 100%;
+    width: calc(80px + 12px);
+  }
+}
+@keyframes widthAnimation2Undo {
+  0% {
+    width: 0px;
+  }
+
+  100%{
+    opacity: 100%;
+    width: calc(80px + 12px);
+  }
+}
+
+form[data-form*="keypanel"]:has([data-type="keywrap checkbox"] input:checked):has([data-type*="knob"] input:checked) + form[data-form="container"] > [data-form*="keypanel"] {
+  animation: scaleAnimation 450ms forwards 1.5s, revealShadow 450ms forwards 1.5s;
+}
+
+form[data-form*="keypanel"]:has([data-type*="knob"] input:not(:checked)) + form[data-form="container"] > [data-form*="keypanel"],
+form[data-form*="keypanel"]:has([data-type="keywrap checkbox"] input:not(:checked)) + form[data-form="container"] > [data-form*="keypanel"] {
+  animation: scaleUndoAnimation 450ms forwards, hideShadow 450ms forwards;
+}
+/* =============================================================================
+  #TOGGLE
+============================================================================= */
+[data-form="switch"] {
+  width: min-content;
+    height: 120px;
+    display: flex;
+    padding: 8px;
+    background-color: #353535;
+    gap: 6px;
+}
+
+
+[data-type="switch"] {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+  border-radius: inherit;
+  cursor: pointer;
+  min-width: 60px;
+}
+
+  [data-type="switch"] > div:first-of-type {
+    position: absolute;
+    left: 0;
+    top: 0;
+    
+    height: 50%;
+    width: 100%;
+    
+    background-color: #efefef;
+    box-shadow: inset 0 0 6px rgb(0 0 0 / 5%), inset 0 0 24px rgb(0 0 0 / 3%), inset -16px -16px 36px rgb(0 0 0 / 10%);
+    
+    transition: background 0.25s ease, box-shadow 0.25s ease;
+    z-index: 2;
+  }
+
+    [data-type="switch"] > div:first-of-type > div {
+      height: 10px;
+      
+      background-color: #fff;
+      transition: height 0.25s ease;
+    }
+
+  [data-type="switch"] > div:last-of-type {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    
+    height: 50%;
+    width: 100%;
+    
+    background-color: #fff;
+    box-shadow: inset 0 0 3px rgb(0 0 0 / 10%), inset 0 0 12px rgb(0 0 0 / 5%);
+    
+    transition: background 0.25s ease, box-shadow 0.25s ease;
+    z-index: 2;
+  }
+
+    [data-type="switch"] > div:last-of-type > div  {
+      position: absolute;
+      bottom: 0;
+      
+      height: 0px;
+      width: 100%;
+      
+      background-color: #fff;
+      box-shadow: inset 0 0 3px rgb(0 0 0 / 10%), inset 0 0 12px rgb(0 0 0 / 5%);
+      
+      transition: height 0.25s ease;
+    }
+
+  input:checked ~ [data-type="switch"] > div:last-of-type {
+      background-color: #efefef;
+      box-shadow: inset 0 0 6px rgb(0 0 0 / 5%), inset 0 0 24px rgb(0 0 0 / 3%), inset -16px -16px 36px rgb(0 0 0 / 10%);
+    }
+
+    input:checked ~ [data-type="switch"] > div:last-of-type > div {
+      height: 10px;
+    }
+
+    input:checked ~ [data-type="switch"] > div:first-of-type {
+      box-shadow: inset 0 0 3px rgb(0 0 0 / 10%), inset 0 0 12px rgb(0 0 0 / 5%);
+      background-color: #fff;
+    }
+
+    input:checked ~ [data-type="switch"] > div:first-of-type > div {
+      height: 0px;
+    }
+
+
+/* =============================================================================
+  #ANIMATIONS
+============================================================================= */
+/* Define the keyframe animation */
 @keyframes hideShadow {
   from { 
     opacity: 100%; 
@@ -465,23 +705,23 @@ form {
 }
 
 @keyframes widthAnimation {
-    0% {
-      position: absolute;
-      width: 0px;
-    }
-
-    75% {
-      position: relative;
-      z-index: 300;
-    }
-
-    100%{
-      position: relative;
-      opacity: 100%;
-      width: 80px;
-      z-index: 300;
-    }
+  0% {
+    position: absolute;
+    width: 0px;
   }
+
+  75% {
+    position: relative;
+    z-index: 300;
+  }
+
+  100%{
+    position: relative;
+    opacity: 100%;
+    width: 80px;
+    z-index: 300;
+  }
+}
 
   @keyframes widthUndoAnimation {
     0% {
