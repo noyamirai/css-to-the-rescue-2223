@@ -18,7 +18,7 @@ html { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: 
   #CSS VARIABLES
 ============================================================================= */
 :root {
-
+  --background-color: #353535;
 }
 
 /* =============================================================================
@@ -56,7 +56,8 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
-    background: #e5e5e5;
+    background: var(--background-color);
+    /* background: #e5e5e5; */
 }
 
 /* =============================================================================
@@ -86,7 +87,7 @@ form, [data-form*="keypanel"] {
   display: flex;
   gap: 6px;
 
-  padding: 6px;
+  padding: 8px;
   border-radius: 14px;
 
   width: min-content;
@@ -98,8 +99,10 @@ form, [data-form*="keypanel"] {
     overflow: hidden;
 
     background-color: #353535;
-    box-shadow: 0px 0px 5px 0px rgb(0 0 0 / 25%) inset, 
-                3px 3px 6px 0px rgb(195, 195, 195);
+    box-shadow: 4px 4px 4px 2px hsl(0deg 0% 15% / 60%), 
+    -4px -4px 4px 2px hsl(0deg 0% 15% / 60%);
+    /* box-shadow: 0px 0px 5px 0px rgb(0 0 0 / 25%) inset, 
+                3px 3px 6px 0px rgb(195, 195, 195); */
   }
 
   [data-form="container"] {
@@ -125,6 +128,8 @@ form > * {
     position: relative;
     width: 80px;
     height: 80px;
+
+    cursor: pointer;
   }
 
   /* Button wrapper */
@@ -136,12 +141,15 @@ form > * {
 
     padding: 10px;
 
-    background-color: #616161;
+    background-color: hsl(0deg 0% 28%);
+    /* background-color: #616161; */
     border-radius: 10px;
 
-    box-shadow: 0px 0px 5px 1px rgb(73 73 73 / 79%) inset, 
-                3px 3px 2px 2px rgb(29 29 29);
-    border: 3px solid transparent;
+    box-shadow: 0px 0px 5px 1px hsl(0deg 0% 22%) inset, 
+                  0px 0px 4px 4px hsl(0deg 0% 15%);
+    /* box-shadow: 0px 0px 5px 1px rgb(73 73 73 / 79%) inset, 
+                3px 3px 2px 2px rgb(29 29 29); */
+    border: 3px solid hsl(0deg 0% 28%);
     transform: scale(1);
 
     cursor: pointer;
@@ -238,7 +246,7 @@ form > * {
       display: flex;
       background-color: #808080;
 
-      background: linear-gradient(345deg, #434343, #787878);
+      background: linear-gradient(345deg, hsl(0deg 0% 22%), hsl(0deg 0% 43%));
 
       padding: 6px;
       width: 100%;
@@ -264,7 +272,7 @@ form > * {
 
       border-radius: 10px;
       
-      background-color: #414141;
+      background-color: hsl(0deg 0% 20%);
     }
 
       [data-type*="knob"] > *:first-of-type > span::before {
@@ -277,7 +285,7 @@ form > * {
 
         border-radius: 10px;
         width: 4px;
-        background-color: #414141;
+        background-color: hsl(0deg 0% 20%);
 
         height: 100%;
       }
@@ -322,9 +330,9 @@ form > * {
 
           border-radius: 50%;
 
-          background-color: #848484;
-          box-shadow: 1px 1px 2px 0px rgb(0 0 0 / 43%) inset;
-          border: 1px solid #757575;
+          background-color: hsl(0deg 0% 58%);
+          box-shadow: 1px 1px 2px 0px hsl(0deg 0% 0% / 48%) inset;
+          border: 1px solid hsl(0, 0%, 46%);
         }
 
         [data-type*="knob"] input:checked ~ div > span > span {
@@ -380,8 +388,11 @@ form > * {
     /* Button clicked */
     [data-type*="checkbox"]:has(input:checked) > label {
       transform: scale(0.97);
-      box-shadow: 0px 0px 5px 1px rgb(73 73 73 / 79%) inset, 
-                  0px 0px 6px 2px rgb(29 29 29);
+      box-shadow: 0px 0px 5px 1px hsl(0deg 0% 22%) inset, 
+                  0px 0px 6px 2px hsl(0deg 0% 15%);
+
+      /* box-shadow: 0px 0px 5px 1px rgb(73 73 73 / 79%) inset, 
+                  0px 0px 6px 2px rgb(29 29 29); */
     }
 
     [data-type*="checkbox"]:has(input:checked) > label {
@@ -409,11 +420,10 @@ form > * {
       justify-content: center;
 
       border-radius: 50px;
-      border: 5px solid #6e6e6e;
+      border: 5px solid hsl(0deg 0% 36%);
+      outline: 1px solid hsl(0deg 0% 34%);
+      box-shadow: 3px 4px 8px 0px hsl(0deg 0% 23% / 73%);
 
-      outline: 1px solid #616161;
-
-      box-shadow: 3px 4px 8px 0px rgba(58, 58, 58, 0.729);
       z-index: 400;
     }
 
@@ -422,11 +432,11 @@ form > * {
       height: 100%;
 
       border-radius: 50%;
-      border: 1px solid #757575;
-
+      border: 1px solid hsl(0deg 0% 41%);
+    
       padding: 35%;
-
-      background: linear-gradient(45deg, rgb(170 170 170 / 94%), rgb(63 63 63) 80%);
+    
+      background: linear-gradient(45deg, hsl(0deg 0% 61% / 94%), hsl(0deg 0% 26%) 80%);    
     }
 
     [data-type="keywrap checkbox"] input[type="checkbox"] + div > div span {
@@ -464,9 +474,10 @@ form > * {
 
   padding: 0px;
 
-  background: #e5e5e5;
-  box-shadow: inset 8px 8px 15px rgb(179 179 179 / 65%), 
-              inset -8px -8px 15px rgb(255 255 255 / 80%);
+  box-shadow: inset 20px 20px 23px hsl(0deg 0% 17%), 
+              inset -20px -20px 23px hsl(0deg 0% 25%);
+  /* box-shadow: inset 8px 8px 15px rgb(179 179 179 / 65%), 
+              inset -8px -8px 15px rgb(255 255 255 / 80%); */
   
   transition: all 450ms ease-in-out;
 }
@@ -483,7 +494,7 @@ form > * {
     border-radius: 7px;
   }
     [data-type="display"] img {
-      opacity: 0;
+      opacity: 100%;
       width: 100%;
       height: 100%;
     }
@@ -499,9 +510,16 @@ form > * {
       width: 100%;
       height: 100%;
       
-      background-color: #e5e5e5;
+      background-color: hsl(0deg 0% 21%);
+      mix-blend-mode: normal;
+    }
+
+    form:has([data-type="display"]):has([data-type*="toggle"] input:checked) > [data-type="display"] img {
+      /* opacity: 100%; */
+    }
+    form:has([data-type="display"]):has([data-type*="toggle"] input:checked) > [data-type="display"] span {
       /* background-color: blue; */
-      /* mix-blend-mode: lighten; */
+      mix-blend-mode: lighten;
     }
 
   form[data-form*="keypanel"]:valid + form[data-form="container"] > [data-type="display"] {
@@ -534,13 +552,17 @@ form > * {
     transform: scale(.1);
   }
 
-form[data-form*="keypanel"]:has([data-type="keywrap checkbox"] input:checked):has([data-type*="knob"] input:checked) + form[data-form="container"] > [data-form*="keypanel"] {
-  animation: widthAnimation2 400ms forwards 1.5s;
+form[data-form="keypanel main"]:has([data-type="keywrap checkbox"] input:checked):has([data-type*="knob"] input:checked) + form[data-form="container"] > [data-form*="keypanel"] {
+  animation: widthAnimation2 400ms forwards 1.5s, 
+            scaleAnimation 450ms forwards 1.5s, 
+            revealShadow 450ms forwards 1.5s;
 }
 
-form[data-form*="keypanel"]:has([data-type*="knob"] input:not(:checked)) + form[data-form="container"] > [data-form*="keypanel"],
-form[data-form*="keypanel"]:has([data-type="keywrap checkbox"] input:not(:checked)) + form[data-form="container"] > [data-form*="keypanel"] {
-  animation: widthAnimation2Undo 400ms forwards reverse 1.5s;
+form[data-form="keypanel main"]:has([data-type*="knob"] input:not(:checked)) + form[data-form="container"] > [data-form*="keypanel"],
+form[data-form="keypanel main"]:has([data-type="keywrap checkbox"] input:not(:checked)) + form[data-form="container"] > [data-form*="keypanel"] {
+  animation: widthAnimation2Undo 400ms forwards reverse 1.5s, 
+            scaleUndoAnimation 450ms forwards, 
+            hideShadow 450ms forwards;
 }
 
 @keyframes widthAnimation2 {
@@ -550,7 +572,7 @@ form[data-form*="keypanel"]:has([data-type="keywrap checkbox"] input:not(:checke
 
   100%{
     opacity: 100%;
-    width: calc(80px + 12px);
+    width: calc(50 + 12px);
   }
 }
 @keyframes widthAnimation2Undo {
@@ -560,110 +582,74 @@ form[data-form*="keypanel"]:has([data-type="keywrap checkbox"] input:not(:checke
 
   100%{
     opacity: 100%;
-    width: calc(80px + 12px);
+    width: calc(50 + 12px);
   }
-}
-
-form[data-form*="keypanel"]:has([data-type="keywrap checkbox"] input:checked):has([data-type*="knob"] input:checked) + form[data-form="container"] > [data-form*="keypanel"] {
-  animation: scaleAnimation 450ms forwards 1.5s, revealShadow 450ms forwards 1.5s;
-}
-
-form[data-form*="keypanel"]:has([data-type*="knob"] input:not(:checked)) + form[data-form="container"] > [data-form*="keypanel"],
-form[data-form*="keypanel"]:has([data-type="keywrap checkbox"] input:not(:checked)) + form[data-form="container"] > [data-form*="keypanel"] {
-  animation: scaleUndoAnimation 450ms forwards, hideShadow 450ms forwards;
 }
 /* =============================================================================
   #TOGGLE
 ============================================================================= */
-[data-form="switch"] {
-  width: min-content;
-    height: 120px;
-    display: flex;
-    padding: 8px;
-    background-color: #353535;
-    gap: 6px;
+[data-form="keypanel toggle"] {
+  border-radius: 10px;
 }
 
+[data-type="keywrap toggle"] > *:first-of-type {
+    border: none;
+    box-shadow: none;
+    background: none;
+    padding: 0;
+}
 
-[data-type="switch"] {
-  position: relative;
-  height: 100%;
+[data-type="keywrap toggle"] {
+  height: 25px;
+  width: 50px;
+}
+
+[data-type="keywrap toggle"]::before {
+  display: none;
+}
+
+/* the toggle */
+[data-type*="toggle"] label > div {
+  display: block;
+  
   width: 100%;
-  background-color: #fff;
-  border-radius: inherit;
-  cursor: pointer;
-  min-width: 60px;
+  height: 100%;
+
+  overflow: hidden;
+
+  border-radius: 33px;
+  background: #353535;
+  box-shadow: -5px -5px 13px 0px rgb(0 0 0 / 30%) inset, 
+              5px 5px 13px rgb(0 0 0 / 30%) inset
 }
 
-  [data-type="switch"] > div:first-of-type {
-    position: absolute;
-    left: 0;
-    top: 0;
-    
-    height: 50%;
-    width: 100%;
-    
-    background-color: #efefef;
-    box-shadow: inset 0 0 6px rgb(0 0 0 / 5%), inset 0 0 24px rgb(0 0 0 / 3%), inset -16px -16px 36px rgb(0 0 0 / 10%);
-    
-    transition: background 0.25s ease, box-shadow 0.25s ease;
-    z-index: 2;
+[data-type*="toggle"] label > div > div {
+  height: 100%;
+  width: 200%;
+  /* width: 25px; */
+  background: hsl(0deg 0% 50%);
+  border-radius: 25px;
+  transform: translate3d(-75%, 0, 0);
+  transition: transform 0.4s cubic-bezier(0.85, 0.05, 0.18, 1.35);
+  box-shadow: -8px -4px 8px 0px rgb(0 0 0 / 21%), 
+              8px 4px 12px 0px rgb(0 0 0 / 33%),
+              0px 0px 6px 1px hsl(0deg 0% 20% / 50%) inset;
+}
+
+[data-type*="toggle"] input:checked ~ div {
+  transform: translate3d(25%, 0, 0);
+}
+
+ [data-type*="toggle"]:has(input:focus) > label {
+  border: none;
+    /* border: 3px solid transparent; */
   }
 
-    [data-type="switch"] > div:first-of-type > div {
-      height: 10px;
-      
-      background-color: #fff;
-      transition: height 0.25s ease;
-    }
-
-  [data-type="switch"] > div:last-of-type {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    
-    height: 50%;
-    width: 100%;
-    
-    background-color: #fff;
-    box-shadow: inset 0 0 3px rgb(0 0 0 / 10%), inset 0 0 12px rgb(0 0 0 / 5%);
-    
-    transition: background 0.25s ease, box-shadow 0.25s ease;
-    z-index: 2;
+  /* Tabbing style */
+  [data-type*="toggle"]:has(input:focus-visible) > label {
+    border: none;
+    /* border: 3px solid #949494; */
   }
-
-    [data-type="switch"] > div:last-of-type > div  {
-      position: absolute;
-      bottom: 0;
-      
-      height: 0px;
-      width: 100%;
-      
-      background-color: #fff;
-      box-shadow: inset 0 0 3px rgb(0 0 0 / 10%), inset 0 0 12px rgb(0 0 0 / 5%);
-      
-      transition: height 0.25s ease;
-    }
-
-  input:checked ~ [data-type="switch"] > div:last-of-type {
-      background-color: #efefef;
-      box-shadow: inset 0 0 6px rgb(0 0 0 / 5%), inset 0 0 24px rgb(0 0 0 / 3%), inset -16px -16px 36px rgb(0 0 0 / 10%);
-    }
-
-    input:checked ~ [data-type="switch"] > div:last-of-type > div {
-      height: 10px;
-    }
-
-    input:checked ~ [data-type="switch"] > div:first-of-type {
-      box-shadow: inset 0 0 3px rgb(0 0 0 / 10%), inset 0 0 12px rgb(0 0 0 / 5%);
-      background-color: #fff;
-    }
-
-    input:checked ~ [data-type="switch"] > div:first-of-type > div {
-      height: 0px;
-    }
-
-
 /* =============================================================================
   #ANIMATIONS
 ============================================================================= */
