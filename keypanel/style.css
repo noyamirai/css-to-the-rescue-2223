@@ -18,7 +18,7 @@ html { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: 
   #CSS VARIABLES
 ============================================================================= */
 :root {
-  --background-color: #353535;
+  --background-color: hsl(0deg 0% 21%);
 }
 
 /* =============================================================================
@@ -48,17 +48,74 @@ body {
     min-height: 100vh;
     min-height: -webkit-fill-available;
 
+    font-family: monospace;
     /* font-family: var(--default-font);
     font-size: var(--mobile-font-size-px); font-size: var(--mobile-font-size-rem); */
     color: var(--text-color);
-    line-height: 1.6;
+    line-height: 1.1;
   
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
-    background: var(--background-color);
+    background-color: var(--background-color);
+    transition: background-color 0.4s ease-in-out;
     /* background: #e5e5e5; */
 }
+
+body:has([data-type*="toggle-color"] input:checked) {
+  --background-color: hsl(0, 0%, 90%);
+}
+
+body:has([data-type*="toggle-color"] input:checked) [data-form*="keypanel"] {
+  box-shadow: none;
+}
+
+body:has([data-type*="toggle-color"] input:checked) [data-type="display"] {
+  box-shadow: inset 8px 8px 15px rgb(179 179 179 / 65%), 
+            inset -8px -8px 15px rgb(255 255 255 / 80%);
+}
+
+body:has([data-type*="toggle-color"] input:checked):has(form[data-form="keypanel main"] [data-type*="knob"] input:checked) [data-type="display"] {
+  height: 120px;
+}
+
+body:has(form[data-form*="main"]:valid):has(form[data-form="container"]:valid):has(form[data-form="keypanel main"] [data-type*="knob"] input:checked) [data-type="display"] img:first-of-type {
+  opacity: 0%;
+}
+
+body:has(form[data-form*="main"]:valid):has(form[data-form="container"]:valid):has(form[data-form="keypanel main"] [data-type*="knob"] input:checked) [data-type="display"] img:last-of-type {
+  opacity: 100%;
+  z-index: 550;
+}
+
+body:has(form[data-form*="main"]:valid):has([data-type*="toggle-display"] input:checked):has([data-type*="toggle-color"] input:checked):has(form[data-form="keypanel main"] [data-type*="knob"] input:checked) [data-type="display"] span {
+  background-color: #fefafe;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body:has(form[data-form*="main"]:valid):has(form[data-form="container"]:valid):has(form[data-form="keypanel main"] [data-type*="knob"] input:checked) main {
+      animation: shake 200ms ease-in-out infinite;
+  }
+
+  @keyframes shake {
+      0% {
+          transform: translateY(0);
+      }
+      25% {
+          transform: translateY(16px);
+      }
+      50% {
+          transform: translateY(-16px);
+      }
+      75% {
+          transform: translateY(16px);
+      }
+      100% {
+          transform: translateY(0);
+      }
+  }
+}
+
 
 /* =============================================================================
   #TYPOGRAPHY
@@ -79,6 +136,98 @@ main {
   align-items: center;
 }
 
+
+main > section {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(--background-color);
+  z-index: 1000;
+
+  pointer-events: none;
+
+  animation: hideLoader .6s ease-in-out forwards 1.5s;
+}
+
+/* SOURCE: https://loading.io/css/ */
+main > section > div {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+main > section > div > div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: hsl(0deg 0% 51%);
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+main > section > div > div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+main > section > div > div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+main > section > div > div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+main > section > div > div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
+@keyframes hideLoader {
+
+    0% {
+      opacity: 100%;
+    }
+
+    90% {
+      opacity: 0;
+    }
+  
+    100% {
+      display: none;
+      opacity: 0%;
+    }
+}
 /* =============================================================================
   #FORM
 ============================================================================= */
@@ -101,6 +250,7 @@ form, [data-form*="keypanel"] {
     background-color: #353535;
     box-shadow: 4px 4px 4px 2px hsl(0deg 0% 15% / 60%), 
     -4px -4px 4px 2px hsl(0deg 0% 15% / 60%);
+      transition: box-shadow 0.4s ease-in-out;
     /* box-shadow: 0px 0px 5px 0px rgb(0 0 0 / 25%) inset, 
                 3px 3px 6px 0px rgb(195, 195, 195); */
   }
@@ -109,7 +259,7 @@ form, [data-form*="keypanel"] {
     flex-direction: column;
     align-items: center;
 
-    gap: 16px;
+    gap: 26px;
   }
 
 form + form, [data-form*="keypanel"] + [data-form*="keypanel"] {
@@ -479,7 +629,7 @@ form > * {
   /* box-shadow: inset 8px 8px 15px rgb(179 179 179 / 65%), 
               inset -8px -8px 15px rgb(255 255 255 / 80%); */
   
-  transition: all 450ms ease-in-out;
+  transition: padding 450ms ease-in-out, box-shadow 0.4s ease-in-out, height 0.4s ease-in-out;
 }
 
   [data-type="display"] > div {
@@ -493,10 +643,26 @@ form > * {
     /* background-color: #353535; */
     border-radius: 7px;
   }
+
     [data-type="display"] img {
-      opacity: 100%;
+      opacity: 0%;
       width: 100%;
       height: 100%;
+    }
+
+    [data-type="display"] img:first-of-type {
+        position: relative;
+        z-index: 100;
+    }
+
+    [data-type="display"] img:last-of-type {
+        opacity: 0%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: auto;
+        height: 156px;
+        transform: translate(-50%, -50%);
     }
 
     [data-type="display"] span {
@@ -510,17 +676,21 @@ form > * {
       width: 100%;
       height: 100%;
       
-      background-color: hsl(0deg 0% 21%);
+      background-color: var(--background-color);
       mix-blend-mode: normal;
+
+      transition: all 0.4s ease-in-out;
+      z-index: 500;
     }
 
-    form:has([data-type="display"]):has([data-type*="toggle"] input:checked) > [data-type="display"] img {
-      /* opacity: 100%; */
-    }
-    form:has([data-type="display"]):has([data-type*="toggle"] input:checked) > [data-type="display"] span {
-      /* background-color: blue; */
+    form[data-form="keypanel main"]:has([data-type="keywrap checkbox"] input:checked):has([data-type*="knob"] input:checked) + form:has([data-type="display"]):has([data-type*="toggle-display"] input:checked) > [data-type="display"] span {
       mix-blend-mode: lighten;
     }
+
+    form[data-form="keypanel main"]:has([data-type="keywrap checkbox"] input:checked):has([data-type*="knob"] input:checked) + form:has([data-type="display"]):has([data-type*="toggle-display"] input:checked) > [data-type="display"] img:first-of-type {
+      opacity: 100%;
+    }
+
 
   form[data-form*="keypanel"]:valid + form[data-form="container"] > [data-type="display"] {
     padding: 8px;
@@ -553,9 +723,9 @@ form > * {
   }
 
 form[data-form="keypanel main"]:has([data-type="keywrap checkbox"] input:checked):has([data-type*="knob"] input:checked) + form[data-form="container"] > [data-form*="keypanel"] {
-  animation: widthAnimation2 400ms forwards 1.5s, 
-            scaleAnimation 450ms forwards 1.5s, 
-            revealShadow 450ms forwards 1.5s;
+  animation: widthAnimation2 400ms forwards 1.35s, 
+            scaleAnimation 450ms forwards 1.35s, 
+            revealShadow 450ms forwards 1.35s;
 }
 
 form[data-form="keypanel main"]:has([data-type*="knob"] input:not(:checked)) + form[data-form="container"] > [data-form*="keypanel"],
@@ -588,24 +758,39 @@ form[data-form="keypanel main"]:has([data-type="keywrap checkbox"] input:not(:ch
 /* =============================================================================
   #TOGGLE
 ============================================================================= */
-[data-form="keypanel toggle"] {
+[data-form*="toggle"] {
   border-radius: 10px;
+  width: 100%;
+  justify-content: center;
 }
 
-[data-type="keywrap toggle"] > *:first-of-type {
-    border: none;
-    box-shadow: none;
-    background: none;
-    padding: 0;
+[data-type*="toggle"] {
+    height: 55px;
+    width: 50%;
 }
 
-[data-type="keywrap toggle"] {
-  height: 25px;
-  width: 50px;
-}
-
-[data-type="keywrap toggle"]::before {
+[data-type*="toggle"]::before {
   display: none;
+}
+
+[data-type*="toggle"] label {
+  padding-bottom: 20px!important;
+}
+
+[data-type*="toggle"] label > span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 5px;
+
+  text-align: center;
+  color: hsl(0deg 0% 15%);
+  text-transform: uppercase;
+  font-size: 10px; font-size: 1.0rem;
+  font-weight: 700;
+
+  transition: color 0.4s ease-in-out;
+
 }
 
 /* the toggle */
@@ -620,7 +805,8 @@ form[data-form="keypanel main"]:has([data-type="keywrap checkbox"] input:not(:ch
   border-radius: 33px;
   background: #353535;
   box-shadow: -5px -5px 13px 0px rgb(0 0 0 / 30%) inset, 
-              5px 5px 13px rgb(0 0 0 / 30%) inset
+              5px 5px 13px rgb(0 0 0 / 30%) inset;
+  transition: background-color 0.4s cubic-bezier(0.85, 0.05, 0.18, 1.35);
 }
 
 [data-type*="toggle"] label > div > div {
@@ -640,16 +826,24 @@ form[data-form="keypanel main"]:has([data-type="keywrap checkbox"] input:not(:ch
   transform: translate3d(25%, 0, 0);
 }
 
- [data-type*="toggle"]:has(input:focus) > label {
-  border: none;
-    /* border: 3px solid transparent; */
-  }
+[data-type*="toggle"]:has( input:checked) label > div {
+  background-color: #03ff55;
 
-  /* Tabbing style */
-  [data-type*="toggle"]:has(input:focus-visible) > label {
-    border: none;
-    /* border: 3px solid #949494; */
-  }
+  box-shadow: 0px 0px 4px 1px #01ff56, 
+              -5px -5px 13px 0px rgb(0 0 0 / 30%) inset, 
+              5px 5px 13px rgb(0 0 0 / 30%) inset;
+}
+
+[data-type*="toggle"]:has( input:checked) label > div > div {
+  background: hsl(0deg 0% 100%);
+  box-shadow: -8px -4px 8px 0px hsl(140deg 100% 35%), 8px 4px 12px 0px hsl(140deg 100% 35%), 0px 0px 6px 1px hsl(140deg 100% 41%) inset;
+}
+
+[data-type*="toggle"]:has(input:checked) label > span {
+  color: #03ff55;
+  text-shadow: 0px 0px 1px #03ff55;
+}
+
 /* =============================================================================
   #ANIMATIONS
 ============================================================================= */

@@ -12,13 +12,22 @@
 
     <main>
 
-        <!-- https://medium.com/@wicar/skeuomorphism-in-interface-designs-1ac4574c22e1 -->
+
+        <section>
+            <div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </section>
+
 
         <form data-form="keypanel main">
             
             <fieldset data-type="keywrap checkbox">
                 <label>
-                    <input type="checkbox" name="power_btn" required>
+                    <input type="checkbox" name="power_btn" autocomplete="off" required>
                     <div>
                         <div>
                             <span></span>
@@ -29,7 +38,7 @@
             
             <fieldset data-type="keywrap knob">
                 <label>
-                    <input type="checkbox" name="resize_btn">
+                    <input type="checkbox" name="resize_btn" autocomplete="off">
 
                     <span></span>
                     <span></span>
@@ -48,16 +57,29 @@
                 <div>
                     <span></span>
                     <img src="./assets/bongo-cat.gif" alt="">
+                    <img src="./assets/bongo-cat-white_mode.gif" alt="">
                 </div>
             </section>
 
             <section data-form="keypanel toggle">
-                <fieldset data-type="keywrap toggle">
+                <fieldset data-type="keywrap toggle toggle-display">
                     <label>
                         <div>
-                            <input type="checkbox" name="check">
+                            <input type="checkbox" name="display_gif" autocomplete="off" required>
                             <div></div>
                         </div>
+
+                        <span>Kitty</span>
+                    </label>
+                </fieldset>
+                <fieldset data-type="keywrap toggle toggle-color">
+                    <label>
+                        <div>
+                            <input type="checkbox" name="change_color"  autocomplete="off" required>
+                            <div></div>
+                        </div>
+
+                        <span>???</span>
                     </label>
                 </fieldset>
             </section>
