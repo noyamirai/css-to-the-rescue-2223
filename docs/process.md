@@ -83,3 +83,64 @@ For some reason I could not figure out how to approach the situation. I tried ma
 ![Button shadows](../docs/assets/button-shadows.png)
 
 Even though I only created one little custom checkbox in one really long day, I felt it was a very valuable learning experience for me. I am excited to continue refining my design and applying what I've learned so far to the other form elements.
+
+## Week 2: 
+Unfortunately the second week was kind of a slump for me. I was happy with the buttons I had created but I got stuck. I had no clue what to do next or what I wanted to create. Yes, I wanted a keypanel, but what did that keypanel do? What does it trigger other than the reveal of other buttons. I felt a bit discouraged and tried to come up with ideas/designs
+
+![Keypanel redesign](../docs/assets/keypanel-redesign.jpg)
+![Keypanel redesign - 2](../docs/assets/keypanel-redesign-2.jpg)
+
+## Week 3
+During the third week I spent most of my time trying to create the knob type button from my design. I was not really sure what the button was going to do on click, but I just wanted to try and make one.
+
+My first attempt on creating a knob, or rotating button, was to implement a slider element. However, after some digging, I realized making a circular slider was going to take quite a lot of time. Especially without using JS. Because I did not want to waste too much time on one button (which I ended up doing anyway), I decided to go for another checkbox. This is where things got a little interesting.
+
+Because I had based most of the styling of my first button on it being a checkbox, it wasn't as modular as I wanted it to be, because now I had two different types of checkboxes! Meaning, the styling got all messed up:
+
+![Button knob attempt](../docs/assets/button-slider-fail.jpg)
+
+Usually I would be using classnames to distinguish the two from each other, but for this assignment thats considered to be illegal. Therefore I looked into the CSS attribute selector. In a way the attribute selector is kind of similar to the classname selector, however it does add more flexibility in a way. I read [this](https://css-tricks.com/almanac/selectors/a/attribute/) article by CSS Tricks in which they explained the various ways you can use the attribute selector. As stated in their article, here are the seven different ways of using the attribute selector:
+
+```css
+[data-value] {
+  /* Attribute exists */
+}
+
+[data-value="foo"] {
+  /* Attribute has this exact value */
+}
+
+[data-value*="foo"] {
+  /* Attribute value contains this value somewhere in it */
+}
+
+[data-value~="foo"] {
+  /* Attribute has this value in a space-separated list somewhere */
+}
+
+[data-value^="foo"] {
+  /* Attribute value starts with this */
+}
+
+[data-value|="foo"] {
+  /* Attribute value starts with this in a dash-separated list */
+}
+
+[data-value$="foo"] {
+  /* Attribute value ends with this */
+}
+```
+
+I figured this would be perfect for my modular keypanel. Overall the buttons have the same styling and shading, so the 'general' styling should be equal. I used a `data-type` to distinguish the difference between button types and `data-form` to define what kind of form we are dealing with (main or not).
+
+Due to the attribute selector I think I have been rather succesfull into making sure my keypanel is modular. I forgot to take screenshots as I was working on the button, so it looked a little different than the picture below, but this is what the knob looks like now:
+
+![Knob button - Final look](../docs/assets/button-knob.png)
+
+After I got the overall look and feel of the knob button ready, it was time to animate it on click. At first I thought this would be easy, just a simple rotate right? Well, it wasn't exactly what I wanted. It rotated, just not as it would in 'real' life. I had put the rotation animation on the actual knob, which held a lot of styling on its own. 
+
+The tiny rotation indicator was positioned absolute, so adding the rotate transform onto it basically didn't rotate it to the correct location. Another issue with the rotate animation was the box-shadow. Because I put the animation on the actual knob (the big circle), the box-shadow that came with it also rotated! Which would not be happening in real life unless your light source moved along with the rotation. So, I had to come up with something else. 
+
+To make sure the box-shadow of the button stayed in it's initial location, I created another child element on top of the knob and gave it a pseudo-element for the little rotation indicator. Now, the rotate animation only happens on this new child element, and the rotation indicator moves along with it to the 'correct' location.
+
+I now realize I migth have been able to get the slider to work, I think I had somewhat of a tunnelvision when it came to creating the knob button. Using the slider came with the only additional JS script, which added a data attritbute to the HTML tag! I wasn't familiar with the attribute selector before, but I could have used the selector to change the rotation of the button instead of a checkbox.
